@@ -1,0 +1,28 @@
+erDiagram
+    %% Conceptual ERD - IntelliQuiz (IQ)
+
+    USER
+    ROLE
+    PERMISSION
+    USER_ROLE
+    ROLE_PERMISSION
+    QUIZ_EVENT
+    TEAM
+    QUESTION
+    QUESTION_CHOICE
+    SUBMISSION
+    EVENT_WINNER
+
+    %% Relationships
+    USER ||--o{ USER_ROLE : has
+    ROLE ||--o{ USER_ROLE : assigned
+    ROLE ||--o{ ROLE_PERMISSION : grants
+    PERMISSION ||--o{ ROLE_PERMISSION : belongs
+    USER ||--o{ QUIZ_EVENT : creates
+    QUIZ_EVENT ||--o{ TEAM : has
+    QUIZ_EVENT ||--o{ QUESTION : contains
+    QUIZ_EVENT ||--o{ EVENT_WINNER : results
+    TEAM ||--o{ SUBMISSION : submits
+    TEAM ||--o{ EVENT_WINNER : ranks
+    QUESTION ||--o{ QUESTION_CHOICE : choices
+    QUESTION ||--o{ SUBMISSION : receives
