@@ -1,0 +1,104 @@
+erDiagram
+    %% 1. USER
+    USER {
+        int id PK
+        string username
+        string password_hash
+    }
+
+    %% 1b. ROLE (New Table)
+    ROLE {
+        int id PK
+        string name
+        string description
+    }
+    
+    %% Permission & mapping tables
+    PERMISSION {
+        int id PK
+        string name
+        string description
+    }
+    ROLE_PERMISSION {
+        int role_id FK
+        int permission_id FK
+    }
+    USER_ROLE {
+        int id PK
+        int user_id FK
+        int role_id FK
+    }
+
+    %% 2. QUIZ_EVENT
+    QUIZ_EVENT {
+        int id PK
+        string title
+        string status
+        string proctor_code
+        int pts_easy
+        int pts_medium
+        int pts_hard
+        timestamp created_at
+    }
+
+    %% 3. TEAM
+    TEAM {
+        int id PK
+        int quiz_event_id FK
+        string name
+        string access_code
+    }
+
+    %% 4. QUESTION
+    QUESTION {
+        int id PK
+        int quiz_event_id FK
+        string text
+        string type
+        string difficulty
+        string correct_answer_text
+        int timer_seconds
+        int sequence_order
+        boolean is_revealed
+    }
+
+    %% 5. QUESTION_CHOICE (New for 1NF)
+    QUESTION_CHOICE {
+        int id PK
+        int question_id FK
+        string label "A, B, C, D"
+        string text
+    }
+
+    %% 6. SUBMISSION (Transactional)
+    SUBMISSION {
+        int id PK
+        int team_id FK
+        int question_id FK
+        string submitted_text
+        timestamp submitted_at
+    }
+
+    %% 7. EVENT_WINNER (Historical Snapshot - Optional but recommended)
+    EVENT_WINNER {
+        int id PK
+        int quiz_event_id FK
+        int team_id FK
+        int rank_position
+        int final_score
+    }
+
+    %% Relationships
+    USER ||--|{ QUIZ_EVENT : "manages"
+    ROLE ||--|{ USER : "defines"
+    ROLE ||--|{ ROLE_PERMISSION : "grants"
+    PERMISSION ||--|{ ROLE_PERMISSION : "defines"
+    USER ||--|{ USER_ROLE : "belongs_to"
+    ROLE ||--|{ USER_ROLE : "grants_role"
+    QUIZ_EVENT ||--|{ TEAM : "hosts"
+    QUIZ_EVENT ||--|{ QUESTION : "contains"
+    TEAM ||--|{ SUBMISSION : "submits"
+    QUESTION ||--|{ SUBMISSION : "receives"
+    QUESTION ||--|{ QUESTION_CHOICE : "has_options"
+    QUIZ_EVENT ||--|{ EVENT_WINNER : "records"
+    TEAM ||--|{ EVENT_WINNER : "achieves"
