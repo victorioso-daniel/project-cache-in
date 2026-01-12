@@ -37,7 +37,7 @@ services:
       SPRING_PROFILES_ACTIVE: docker
       DISABLE_DOTENV: "true"
     ports:
-      - "8090:8080"
+      - "8090:8082"
     depends_on:
       db:
         condition: service_healthy
