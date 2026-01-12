@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  app:
+    image: my-intelliquiz-backend:latest
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/intelliquiz
+
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_DB: intelliquiz
+      POSTGRES_PASSWORD: secretpassword
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data
