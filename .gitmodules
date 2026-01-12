@@ -2,8 +2,9 @@
 [submodule "backend"]
     path = backend
     url = https://github.com/victorioso-daniel/IntelliQuizAPI.git
-    branch = main
+    branch = master
 
 [submodule "IntelliQuiz-Frontend"]
 	path = IntelliQuiz-Frontend
 	url = https://github.com/your-username/IntelliQuiz-Frontend.git
+	branch = main
