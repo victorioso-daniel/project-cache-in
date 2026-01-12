@@ -5,4 +5,4 @@
 
 [submodule "IntelliQuiz-Frontend"]
 	path = IntelliQuiz-Frontend
-	url = https://github.com/your-username/IntelliQuiz-Frontend.git
+	url = git@github.com:mamasalanang-gerald/IntelliQuiz-Frontend.git
