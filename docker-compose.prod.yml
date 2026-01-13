@@ -22,11 +22,9 @@ services:
       timeout: 5s
       retries: 5
 
-  # Spring Boot Backend Container
+  # Spring Boot Backend Container (pulled from Docker Hub)
   backend:
-    build:
-      context: ./backend
-      dockerfile: ./Dockerfile
+    image: gm1026/intelliquiz-backend:latest
     container_name: intelliquiz_backend
     restart: always
     environment:
