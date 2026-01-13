@@ -1,9 +1,7 @@
-version: '3.8'
-
 services:
   # PostgreSQL Database Container
   db:
-    image: postgres:18-alpine
+    image: postgres:16-alpine
     container_name: intelliquiz_db
     restart: always
     environment:
@@ -36,8 +34,18 @@ services:
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_PROFILES_ACTIVE: docker
       DISABLE_DOTENV: "true"
+      # Backup Configuration
+      DB_URL: jdbc:postgresql://db:5432/intelliquiz
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: intelliquiz
+      DB_USERNAME: postgres
+      DB_PASSWORD: mysecretpassword
+      BACKUP_DIR: /app/backups
     ports:
       - "8090:8082"
+    volumes:
+      - backup_data:/app/backups
     depends_on:
       db:
         condition: service_healthy
@@ -46,6 +54,7 @@ services:
 
 volumes:
   postgres_data:
+  backup_data:
 
 networks:
   intelliquiz_network:
